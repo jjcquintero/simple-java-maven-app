@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        none
+        nodsfdne
     }
     stages {
         stage('Sonarqube') {
