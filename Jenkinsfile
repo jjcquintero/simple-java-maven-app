@@ -2,7 +2,6 @@ pipeline {
     agent {
         docker {
             image 'sonarqube' 
-            args '-v /root/.m2:/root/.m2' 
         }
     }
     stages {
