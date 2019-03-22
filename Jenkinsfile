@@ -17,5 +17,12 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+
+            recordIssues enabledForFailure: true, tools: [mavenConsole(), java(), javaDoc()]
+            recordIssues enabledForFailure: true, tool: checkStyle()
+        }
+    }
 }
 
