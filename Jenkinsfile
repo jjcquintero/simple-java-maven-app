@@ -11,6 +11,11 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package' 
             }
         }
+        stage ('Analysis') {
+            steps {
+                sh 'mvn --batch-mode -V -U -e checkstyle:checkstyle pmd:pmd pmd:cpd findbugs:findbugs spotbugs:spotbugs'
+            }
+        }
     }
 }
 
