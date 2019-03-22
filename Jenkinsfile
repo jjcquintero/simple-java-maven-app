@@ -1,21 +1,16 @@
 pipeline {
-    agent none
-
+    agent {
+        docker {
+            image 'maven:3-alpine' 
+            args '-v /root/.m2:/root/.m2' 
+        }
+    }
     stages {
-        stage('Sonarqube') {
-            environment {
-                scannerHome = tool 'SonarQubeScannerTFM'
-            }
+        stage('Build') { 
             steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh "${scannerHome}/bin/sonar-scanner"
-                }
-                timeout(time: 10, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
+                sh 'mvn -B -DskipTests clean package' 
             }
         }
     }
 }
-
 
