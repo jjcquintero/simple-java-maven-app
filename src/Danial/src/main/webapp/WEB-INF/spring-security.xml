@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Configuring RoleVoter bean to use custom access roles, by default roles
+        should be in the form ROLE_{XXX} -->
+    <beans:bean id="roleVoter"
+                class="org.springframework.security.access.vote.RoleVoter">
+        <beans:property name="rolePrefix" value=""></beans:property>
+    </beans:bean>
+
+    <beans:bean id="accessDecisionManager"
+                class="org.springframework.security.access.vote.AffirmativeBased">
+        <beans:constructor-arg name="decisionVoters"
+                               ref="roleVoter"/>
+    </beans:bean>
+
+    <beans:bean id="LoginAuthenticationSuccessHandler" class="com.springapp.mvc.security.LoginAuthenticationSuccessHandler"></beans:bean>
+    <beans:bean id="LoginAuthenticationFailureHandler" class="com.springapp.mvc.security.LoginAuthenticationFailureHandler"></beans:bean>
+
+
+
+    <http authentication-manager-ref="auth"
+          access-decision-manager-ref="accessDecisionManager">
+
+        <intercept-url pattern="/index" access="user,admin"/>
+        <intercept-url pattern="/add-to-marketing" access="user,admin"/>
+        <intercept-url pattern="/companyHouseClients" access="user,admin"/>
+        <intercept-url pattern="/company-client-detail" access="user,admin"/>
+        <intercept-url pattern="/fix-appointment" access="user,admin"/>
+        <intercept-url pattern="/appointment-overview" access="user,admin"/>
+        <intercept-url pattern="/get-user-edit-page" access="user,admin"/>
+        <intercept-url pattern="/create-user-accounts" access="admin"/>
+        <intercept-url pattern="/manage-user-accounts" access="admin"/>
+        <intercept-url pattern="/edit-employee-details-page" access="admin"/>
+
+
+
+        <form-login login-page="/login" authentication-failure-url="/sign-in?error"
+                    username-parameter="username" password-parameter="password"
+                    authentication-success-handler-ref="LoginAuthenticationSuccessHandler"
+                    authentication-failure-handler-ref="LoginAuthenticationFailureHandler"
+                />
+
+<!--F1n@w1f1-->
+        <logout
+                logout-success-url="/login"
+                logout-url="/perform_logout"
+                invalidate-session="true"
+                delete-cookies="JSESSIONID" />
+
+        <access-denied-handler error-page="/un-authorize"/>
+
+    </http>
+
+
+    <authentication-manager id="auth">
+        <authentication-provider user-service-ref="userDetailsService">
+
+        </authentication-provider>
+    </authentication-manager>
+
+    <beans:bean id="userDetailsService"
+                class="com.springapp.mvc.security.LoginUserDetails"/>
+
+</beans:beans>

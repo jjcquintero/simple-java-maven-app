@@ -1,0 +1,80 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:component-scan base-package="com.springapp.mvc"/>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/danial"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+        <property name="validationQuery" value="SELECT 1"/>
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="com.springapp.mvc.domain"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/danial</prop>
+                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <mvc:annotation-driven/>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="marketingMainDao" class="com.springapp.mvc.dao.MarketingMainDaoImpl"/>
+    <bean id="authenticationDao" class="com.springapp.mvc.dao.AuthenticationDaoImpl"/>
+    <bean id="appointmentDao" class="com.springapp.mvc.dao.AppointmentDaoImpl"/>
+    <bean id="registeredOfficeDao" class="com.springapp.mvc.dao.RegisteredOfficeDaoImpl"/>
+    <bean id="businessOfficeDao" class="com.springapp.mvc.dao.BusinessOfficeDaoImpl"/>
+    <bean id="postalOfficeDao" class="com.springapp.mvc.dao.PostalOfficeDaoImlp"/>
+    <bean id="ourClientNewDao" class="com.springapp.mvc.dao.OurClientNewDaoImpl"/>
+    <bean id="officersDao" class="com.springapp.mvc.dao.OfficersDaoImpl"/>
+    <bean id="payrollDao" class="com.springapp.mvc.dao.PayrollDaoImpl"/>
+
+    <bean id="marketingMainService" class="com.springapp.mvc.service.MarketingMainServiceImpl"/>
+    <bean id="authenticationService" class="com.springapp.mvc.service.AuthenticationServiceImpl"/>
+    <bean id="appointmentService" class="com.springapp.mvc.service.AppointmentServiceImpl"/>
+    <bean id="registeredOfficeService" class="com.springapp.mvc.service.RegisteredOfficeServiceImpl"/>
+    <bean id="businessOfficeService" class="com.springapp.mvc.service.RegisteredOfficeServiceImpl"/>
+    <bean id="postalOfficeService" class="com.springapp.mvc.service.PostalOfficeServiceImpl"/>
+    <bean id="ourClientNewService" class="com.springapp.mvc.service.OurClientNewServiceImpl"/>
+    <bean id="officersService" class="com.springapp.mvc.service.OfficersServiceImpl"/>
+    <bean id="businessOfficersService" class="com.springapp.mvc.service.BusinessOfficeServiceImpl"/>
+    <bean id="payrollService" class="com.springapp.mvc.service.PayrollServiceImpl"/>
+
+    <bean id="fileValidator" class="com.springapp.mvc.validator.FileValidator" />
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+</beans>
