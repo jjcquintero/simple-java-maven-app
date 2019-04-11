@@ -1,22 +1,14 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3-alpine' 
-            args '-v /root/.m2:/root/.m2' 
-        }
-    }
+    agent any
     stages {
         stage('Build') { 
             steps {
-                sh 'mvn -B -DskipTests clean package' 
-            }
+                docker run -v /var/jenkins/home/simple-java-maven-app/ZAP:/zap/wrk/:rw -t owasp/zap2docker-weekly zap-baseline.py -t https://www.example.com -g gen.conf -r testreport.html
+  	    }
         }
     }
     post {
         always {
-
-            recordIssues enabledForFailure: true, tools: [mavenConsole(), java(), javaDoc()]
-            recordIssues enabledForFailure: true, tool: checkStyle()
 
 	    publishHTML target: [
             allowMissing: false,
