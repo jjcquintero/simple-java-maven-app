@@ -22,7 +22,7 @@ pipeline {
             allowMissing: false,
             alwaysLinkToLastBuild: false,
             keepAll: true,
-            reportDir: 'coverage',
+            reportDir: 'Report',
             reportFiles: 'jj.html',
             reportName: 'RCov Report'
           ]
