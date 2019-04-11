@@ -17,14 +17,6 @@ pipeline {
 
             recordIssues enabledForFailure: true, tools: [mavenConsole(), java(), javaDoc()]
             recordIssues enabledForFailure: true, tool: checkStyle()
-		publishHTML (target: [
-      allowMissing: false,
-      alwaysLinkToLastBuild: false,
-      keepAll: true,
-      reportDir: 'coverage',
-      reportFiles: 'jj.html',
-      reportName: "RCov Report"
-    ])
         }
     }
 }
