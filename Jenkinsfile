@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh "docker run -v /var/jenkins/home/simple-java-maven-app/ZAP:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t https://www.example.com -g gen.conf -r testreport.html"
+                sh "docker run -v /var/jenkins/home/workspace/PipelineTFM/ZAP:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t https://www.example.com -g gen.conf -r testreport.html"
   	    }
         }
     }
