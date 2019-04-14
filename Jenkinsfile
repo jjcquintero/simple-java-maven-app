@@ -17,7 +17,7 @@ pipeline {
                 sh "echo JENKINS_URL  $JENKINS_URL"
                 sh "echo BUILD_URL  $BUILD_URL"
                 sh "echo JOB_URL  $JOB_URL"
-              	sh "docker run -u root -v $PWD:/zap/wrk:rw -t owasp/zap2docker-weekly zap-baseline.py -t https://www.example.com -g gen.conf -r jj2.html || true"
+              	sh "docker run -u root -v $PWD:/zap/wrk:rw -t owasp/zap2docker-weekly zap-baseline.py -t https://www.example.com -g gen.conf -r jj3.html || true"
   	    }
         }
     }
@@ -30,7 +30,7 @@ pipeline {
             alwaysLinkToLastBuild: false,
             keepAll: true,
             reportDir: '$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER',
-            reportFiles: 'jj2.html',
+            reportFiles: 'jj3.html',
             reportName: 'RCov Report'
           ]
         }
