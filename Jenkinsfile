@@ -17,7 +17,7 @@ pipeline {
                 sh "echo JENKINS_URL  $JENKINS_URL"
                 sh "echo BUILD_URL  $BUILD_URL"
                 sh "echo JOB_URL  $JOB_URL"
-              	sh "docker run -u root -v $JENKINS_HOME/jobs/$JOB_NAME/$BUILD_NUMBER:/zap/wrk:rw -t owasp/zap2docker-weekly zap-baseline.py -t https://www.example.com -g gen.conf -r jj3.html || true"
+              	sh "docker run -u root -v $JENKINS_HOME/jobs/$JOB_NAME/$BUILD_NUMBER:/zap/wrk:rw -t owasp/zap2docker-weekly zap-baseline.py -t https://www.example.com -g gen.conf -r /zap/wrk/jj3.html || true"
   	    }
         }
     }
