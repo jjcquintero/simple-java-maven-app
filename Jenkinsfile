@@ -29,7 +29,7 @@ pipeline {
             allowMissing: false,
             alwaysLinkToLastBuild: false,
             keepAll: true,
-            reportDir: 'Report',
+            reportDir: '$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER',
             reportFiles: 'jj2.html',
             reportName: 'RCov Report'
           ]
