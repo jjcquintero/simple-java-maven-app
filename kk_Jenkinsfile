@@ -9,5 +9,18 @@ pipeline {
   	    }
         }
     }
+    post {
+        always {
+
+	    publishHTML target: [
+            allowMissing: false,
+            alwaysLinkToLastBuild: false,
+            keepAll: true,
+            reportDir: 'Report',
+            reportFiles: 'jj2.html',
+            reportName: 'RCov Report'
+          ]
+        }
+    }
 }
 
