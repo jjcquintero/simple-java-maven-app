@@ -3,22 +3,20 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-		sh"
-		echo $BUILD_NUMBER
-                echo $BUILD_ID
-                echo $BUILD_DISPLAY_NAME
-                echo $JOB_NAME
-                echo $JOB_BASE_NAME
-                echo $BUILD_TAG
-                echo $EXECUTOR_NUMBER
-                echo $NODE_NAME
-                echo $NODE_LABELS
-                echo $WORKSPACE
-                echo $JENKINS_HOME
-                echo $JENKINS_URL
-                echo $BUILD_URL
-                echo $JOB_URL
-		"
+                sh "echo   $BUILD_NUMBER"
+                sh "echo   $BUILD_ID"
+                sh "echo   $BUILD_DISPLAY_NAME"
+                sh "echo   $JOB_NAME"
+                sh "echo   $JOB_BASE_NAME"
+                sh "echo   $BUILD_TAG"
+                sh "echo   $EXECUTOR_NUMBER"
+                sh "echo   $NODE_NAME"
+                sh "echo   $NODE_LABELS"
+                sh "echo   $WORKSPACE"
+                sh "echo   $JENKINS_HOME"
+                sh "echo   $JENKINS_URL"
+                sh "echo   $BUILD_URL"
+                sh "echo   $JOB_URL"
               	sh "docker run -u root -v /home/jjcquintero/v2JenkinsData/workspace/TestZAP:/zap/wrk:rw -t owasp/zap2docker-weekly zap-baseline.py -t https://www.example.com -g gen.conf -r jj2.html || true"
   	    }
         }
