@@ -4,7 +4,7 @@ pipeline {
         stage('Build') { 
             steps {
 		sh "pwd"
-                sh "docker run -u root -v /var/jenkins_home/workspace/PipelineTFM/ZAP:/zap/wrk:rw -t owasp/zap2docker-weekly zap-baseline.py -t https://www.example.com -g gen.conf -r jj.html" 
+                sh "docker run -u root -v /var/jenkins_home/workspace/PipelineTFM/Report:/zap/wrk:rw -t owasp/zap2docker-weekly zap-baseline.py -t https://www.example.com -g gen.conf -r jj2.html" 
   	    }
         }
     }
@@ -16,7 +16,7 @@ pipeline {
             alwaysLinkToLastBuild: false,
             keepAll: true,
             reportDir: 'Report',
-            reportFiles: 'jj.html',
+            reportFiles: 'jj2.html',
             reportName: 'RCov Report'
           ]
         }
