@@ -30,7 +30,7 @@ pipeline {
             alwaysLinkToLastBuild: false,
             keepAll: true,
             reportDir: 'Report',
-            reportFiles: '/var/jenkins_home/workspace/TestZAP/jj2.html',
+            reportFiles: 'jj2.html',
             reportName: 'RCov Report'
           ]
         }
