@@ -3,7 +3,9 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-              	sh "ssh jjcquintero@192.168.1.170 \"docker run -u root -v /home/jjcquintero/v2JenkinsData/jobs/$JOB_NAME/builds/$BUILD_NUMBER/htmlreports/OWASP_20ZAP:/zap/wrk:rw -t owasp/zap2docker-weekly zap-baseline.py -t http://testphp.vulnweb.com/ -g gen.conf -r owaspzap.html\" || true"
+		docker run --name zapcontainer -u root -v $PWD:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t  http://testphp.vulnweb.com/ -g gen.conf -r owaspzap.html
+		docker cp zapcontainer:/zap/wrk/owaspzap.html /$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER/htmlreports/OWASP_20ZAP
+		docker rm zapcontainer
   	    }
         }
     }

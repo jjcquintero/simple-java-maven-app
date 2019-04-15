@@ -3,21 +3,7 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh "echo BUILD_NUMBER  $BUILD_NUMBER"
-                sh "echo BUILD_ID  $BUILD_ID"
-                sh "echo BUILD_DISPLAY_NAME  $BUILD_DISPLAY_NAME"
-                sh "echo JOB_NAME  $JOB_NAME"
-                sh "echo JOB_BASE_NAME  $JOB_BASE_NAME"
-                sh "echo BUILD_TAG  $BUILD_TAG"
-                sh "echo EXECUTOR_NUMBER  $EXECUTOR_NUMBER"
-                sh "echo NODE_NAME  $NODE_NAME"
-                sh "echo NODE_LABELS  $NODE_LABELS"
-                sh "echo WORKSPACE  $WORKSPACE"
-                sh "echo JENKINS_HOME  $JENKINS_HOME"
-                sh "echo JENKINS_URL  $JENKINS_URL"
-                sh "echo BUILD_URL  $BUILD_URL"
-                sh "echo JOB_URL  $JOB_URL"
-              	sh "ssh jjcquintero@192.168.1.170 \"docker run -u root -v /home/jjcquintero/v2JenkinsData/jobs/$JOB_NAME/builds/$BUILD_NUMBER/htmlreports/RCov_20Report:/zap/wrk:rw -t owasp/zap2docker-weekly zap-baseline.py -t https://www.example.com -g gen.conf -r jj3.html\" || true"
+              	sh "ssh jjcquintero@192.168.1.170 \"docker run -u root -v /home/jjcquintero/v2JenkinsData/jobs/$JOB_NAME/builds/$BUILD_NUMBER/htmlreports/OWASP_20ZAP:/zap/wrk:rw -t owasp/zap2docker-weekly zap-baseline.py -t http://testphp.vulnweb.com/ -g gen.conf -r owaspzap.html\" || true"
   	    }
         }
     }
@@ -30,8 +16,8 @@ pipeline {
             alwaysLinkToLastBuild: false,
             keepAll: true,
             reportDir: '$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER',
-            reportFiles: 'jj3.html',
-            reportName: 'RCov Report'
+            reportFiles: 'owaspzap.html',
+            reportName: 'OWASP ZAP'
           ]
         }
     }
