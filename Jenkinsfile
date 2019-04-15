@@ -5,7 +5,8 @@ pipeline {
             steps {
 		sh "docker rm zapcontainer"
 		sh "docker run --name zapcontainer -u root -v $PWD:/zap/wrk -t owasp/zap2docker-weekly zap-baseline.py -t  https://www.forocoches.com/ -g gen.conf -r owaspzap.html || true"
-		sh "docker cp zapcontainer:/zap/wrk/owaspzap.html /$JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER/htmlreports/OWASP_20ZAP"
+		sh "mkdir -p $JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER/htmlreports/OWASP_20ZAP"
+		sh "docker cp zapcontainer:/zap/wrk/owaspzap.html $JENKINS_HOME/jobs/$JOB_NAME/builds/$BUILD_NUMBER/htmlreports/OWASP_20ZAP"
   	    }
         }
     }
